@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{site/index.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<section class="inner_page_head">
+			<div class="container_fuild">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="full">
+							<h3>Product Grid</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end inner page section -->
+		<!-- product section -->
+		<section class="product_section layout_padding">
+			<div class="container">
+				<div class="heading_container heading_center">
+					<h2>
+						Our <span>products</span>
+					</h2>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-md-4 col-lg-4" th:each="product : ${products}">
+						<div class="box">
+							<div class="option_container">
+								<div class="options">
+									<a href="" class="option1">Add to Cart</a>
+									<a href="" class="option2"> Buy Now </a>
+								</div>
+							</div>
+							<div class="img-box">
+								<img th:src="${'/site/images/' + product.image}" alt="">
+							</div>
+							<div class="detail-box">
+								<h5 th:text="${product.name}"></h5>
+								<h6 th:text="${product.unitPrice}"></h6>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-box">
+					<div class="pagination">
+						<ul class="pagination">
+							<li class="page-item" th:class="${currentPage.number == 0} ? 'disabled' : ''">
+								<a class="page-link" th:href="@{/site/product(page=0)}">First</a>
+							</li>
+							<li class="page-item" th:class="${currentPage.number == 0} ? 'disabled' : ''">
+								<a class="page-link" th:href="@{/site/product(page=__${currentPage.number - 1}__)}">Previous</a>
+							</li>
+
+							<li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+								<a class="page-link" th:href="@{/site/product(page=__${pageNum}__)}"
+								   th:class="${pageNum == currentPage.number} ? 'active' : ''" th:text="${pageNum + 1}"></a>
+							</li>
+							<li class="page-item" th:class="${currentPage.number == totalPages - 1} ? 'disabled' : ''">
+								<a class="page-link" th:href="@{/site/product(page=__${currentPage.number + 1}__)}">Next</a>
+							</li>
+							<li class="page-item" th:class="${currentPage.number == totalPages - 1} ? 'disabled' : ''">
+								<a class="page-link" th:href="@{/site/product(page=__${totalPages - 1}__)}">Last</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end product section -->
+	</section>
+
+</body>
+</html>

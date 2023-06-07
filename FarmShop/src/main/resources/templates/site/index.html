@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<!-- Basic -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Mobile Metas -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<!-- Site Metas -->
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="shortcut icon" th:href="@{/site/img/favicon.png}" type="">
+<title>Famms - Fashion HTML Template</title>
+<!-- bootstrap core css -->
+<link rel="stylesheet" type="text/css" th:href="@{/site/css/bootstrap.css}"/>
+<!-- font awesome style -->
+<link  th:href="@{/site/css/font-awesome.min.css}" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link th:href="@{/site/css/style.css} "rel="stylesheet" />
+<!-- responsive style -->
+<link rel="stylesheet" th:href="@{/site/css/responsive.css}" />
+</head>
+<body>
+	<div class="hero_area" th:replace="site/fragments/header:: header"></div>
+	<div layout:fragment="content"></div>
+	<div th:replace="site/fragments/footer:: footer"></div>
+	<script  th:src="@{/site/js/jquery-3.4.1.min.js}"></script>
+	<!-- popper js -->
+	<script  th:src="@{/site/js/popper.min.js}"></script>
+	<!-- bootstrap js -->
+	<script  th:src="@{/site/js/bootstrap.js}"></script>
+	<!-- custom js -->
+	<script  th:src="@{/site/js/custom.js}"></script>
+</body>
+</html>
