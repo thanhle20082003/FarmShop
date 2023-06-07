@@ -54,7 +54,7 @@
                 <script>
                   function chooseFile(fileInput) {
                     if(fileInput.files && fileInput.files[0]) {
-                      var reader = new FileReader();
+                      const reader = new FileReader();
 
                       reader.onload = function (e) {
                         $('#image').attr('src', e.target.result);
@@ -66,7 +66,7 @@
                 </script>
                 <input type="hidden" th:field="*{image}">
                 <div>
-                  <img id="image" th:src="${product.image != null ? '/admin/products/images/' + product.image : '/admin/image/noimage.jpg' }" style="width: 100%; height: 250px;" class="img-fluid" alt="">
+                  <img id="image" th:src="${product.image != null ? '/admin/products/images/' + product.image : '/admin/img/noimage.jpg' }" style="width: 100%; height: 250px;" class="img-fluid" alt="">
                 </div>
                 <div class="form-group">
                   <label>Image File: </label>
