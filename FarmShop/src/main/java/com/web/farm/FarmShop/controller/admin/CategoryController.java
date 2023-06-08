@@ -1,7 +1,6 @@
 package com.web.farm.FarmShop.controller.admin;
 
 import com.web.farm.FarmShop.domain.Category;
-import com.web.farm.FarmShop.domain.Product;
 import com.web.farm.FarmShop.model.CategoryDTO;
 import com.web.farm.FarmShop.service.CategoryService;
 import jakarta.validation.Valid;

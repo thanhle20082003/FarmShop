@@ -54,7 +54,7 @@
                 <script>
                   function chooseFile(fileInput) {
                     if(fileInput.files && fileInput.files[0]) {
-                      const reader = new FileReader();
+                      var reader = new FileReader();
 
                       reader.onload = function (e) {
                         $('#image').attr('src', e.target.result);
