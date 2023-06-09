@@ -52,18 +52,15 @@ public class ProductController {
         }).toList();
     }
 
-    @GetMapping("")
+    @RequestMapping("")
     public String list(
             ModelMap model,
-            @RequestParam(value = "pageNumber", defaultValue = "0") Optional<Integer> pageNumber,
-            @RequestParam(name = "name", required = false, defaultValue = "") String name
+            @RequestParam(value = "pageNumber", defaultValue = "0") Optional<Integer> pageNumber
     ) {
         Pageable pageable = PageRequest.of(pageNumber.orElse(0), 5);
 
-        model.addAttribute("name", name);
-        Page<Product> page = productService.findAllByNameLike("%"+name+"%",pageable);
+        Page<Product> page = productService.findAll(pageable);
 
-//        List<Category> list = categoryService.findAll();
         model.addAttribute("products", page);
         return "admin/products/list";
     }
@@ -118,7 +115,8 @@ public class ProductController {
         return new ModelAndView("forward:/admin/products", model);
     }
 
-    @PostMapping("saveOrUpdate")
+//    @PostMapping("saveOrUpdate")
+    @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
     public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("product") ProductDTO dto, BindingResult result) {
 
         if(result.hasErrors()) {

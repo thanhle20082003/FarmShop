@@ -76,7 +76,7 @@
               <a class="page-link" th:href="@{'/admin/products?pageNumber=0'}">First</a>
             </li>
             <li class="page-item">
-              <a class="page-link" th:href="@{'/admin/products?pageNumber=' + ${products.number - 1}+ '&name=' + ${name}}"
+              <a class="page-link" th:href="@{'/admin/products?pageNumber=' + ${products.number - 1}}"
                  th:disabled="${products.number <= 0}" th:if="${products.number > 0}">&laquo;</a>
             </li>
             <li class="page-item active">
@@ -84,13 +84,13 @@
             </li>
             <li class="page-item">
             <li class="page-item">
-              <a class="page-link" th:href="@{'/admin/products?pageNumber=' + ${products.number + 1}+ '&name=' + ${name}}"
+              <a class="page-link" th:href="@{'/admin/products?pageNumber=' + ${products.number + 1}}"
                  th:if="${products.number < (products.getTotalPages() - 1)}"
                  th:disabled="${products.number >= (products.getTotalPages() - 1)}"
               >&raquo;</a>
             </li>
             <li class="page-item">
-              <a class="page-link" th:href="@{'/admin/products?pageNo='+${products.getTotalPages() - 1}+ '&name=' + ${name}}">Last</a>
+              <a class="page-link" th:href="@{'/admin/products?pageNo='+${products.getTotalPages() - 1}}">Last</a>
             </li>
           </ul>
         </nav>

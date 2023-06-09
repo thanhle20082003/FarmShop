@@ -20,14 +20,14 @@
 </head>
 <body>
     <div id="wrapper">
-        <div th:replace="admin/fragments/header:: header"></div>
+        <div th:replace="~{admin/fragments/header :: header}"></div>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <div class="container-fluid">
                     <div layout:fragment="content"></div>
                 </div>
             </div>
-            <div th:replace="admin/fragments/footer:: footer"></div>
+            <div th:replace="~{admin/fragments/footer :: footer}"></div>
         </div>
     </div>
 
