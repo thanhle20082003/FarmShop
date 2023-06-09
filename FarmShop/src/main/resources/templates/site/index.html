@@ -24,9 +24,9 @@
 <link rel="stylesheet" th:href="@{/site/css/responsive.css}" />
 </head>
 <body>
-	<div class="hero_area" th:replace="site/fragments/header:: header"></div>
+	<div class="hero_area" th:replace="~{site/fragments/header:: header}"></div>
 	<div layout:fragment="content"></div>
-	<div th:replace="site/fragments/footer:: footer"></div>
+	<div th:replace="~{site/fragments/footer:: footer}"></div>
 	<script  th:src="@{/site/js/jquery-3.4.1.min.js}"></script>
 	<!-- popper js -->
 	<script  th:src="@{/site/js/popper.min.js}"></script>

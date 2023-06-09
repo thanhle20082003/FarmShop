@@ -4,22 +4,17 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-
-import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminLoginDTO implements Serializable {
-
+public class SiteLoginDTO {
     @NotEmpty
-    private String username;
+    private String email;
+
 
     @NotEmpty
     private String password;
 
-    private Boolean isAdmin;
-
-    private Boolean rememberMe = false;
+    private Boolean rememberMe  = false;
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{site/index.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<section class="inner_page_head">
+	         <div class="container_fuild">
+	            <div class="row">
+	               <div class="col-md-12">
+	                  <div class="full">
+	                     <h3>Sign Up</h3>
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	      </section>
+		<section class="why_section layout_padding">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 offset-lg-2">
+						<div class="full">
+							<form th:action="@{/slogin}" method="post" th:object="${customer}">
+								<fieldset>
+									<div class="form-group">
+										<input type="email" placeholder="Enter your email address"
+											   th:field="*{email}" class="form-control" />
+										<small th:if="${#fields.hasErrors('email')}" id="username"
+											   class="form-text text-muted">Email is invalid</small>
+									</div>
+									<div class="form-group">
+										<input type="password" placeholder="Password" th:field="*{password}" class="form-control">
+										<small th:if="${#fields.hasErrors('password')}" id="password"
+											   class="form-text text-muted">Password is invalid</small>
+									</div>
+
+									<div class="form-group">
+										<input type="checkbox" class="custom-control-input" th:field="*{rememberMe}" />
+										<label class="custom-control-label">Remember Me</label>
+									</div>
+									<button type="submit" class="btn-box">Submit</button>
+									<div th:if="${message != null}" class="alert alert-primary" role="alert">
+										<i>[[${message}]]</i>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+</body>
+</html>

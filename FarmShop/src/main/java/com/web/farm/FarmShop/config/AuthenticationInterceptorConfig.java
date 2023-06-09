@@ -25,8 +25,8 @@ public class AuthenticationInterceptorConfig implements WebMvcConfigurer {
                 "/admin/js/**", "/admin/scss/**");
 
 //        registry.addInterceptor(siteAuthenticationInterceptor)
-//                .addPathPatterns("/site/**")
-//                .excludePathPatterns("/site/css/**", "/site/js/**", "/site/images/**", "/site/fonts/**");
+//                .addPathPatterns("/site/")
+//                .excludePathPatterns("/site/css/**", "/site/js/**", "/site/img/**", "/site/fonts/**");
     }
 
 }

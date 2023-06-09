@@ -26,7 +26,7 @@ public class HomeController {
 	@Autowired
 	private StorageService storageService;
 
-	@GetMapping("")
+	@RequestMapping("")
 	public String index() {
 
 		return "site/fragments/home";

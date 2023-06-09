@@ -35,7 +35,7 @@ public class Customer implements Serializable {
     private Date registeredDate;
 
     @Column(nullable = true)
-    private short status;
+    private Boolean isActive;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orders;
