@@ -1120,3 +1120,42 @@ form input[type="submit"]:focus {
     font-weight: 400;
 }
 
+.category-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.category-item {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: #f1f1f1;
+}
+
+.category-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.category-item:last-child {
+    margin-right: 0;
+}
+

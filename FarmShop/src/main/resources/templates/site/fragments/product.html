@@ -28,6 +28,17 @@
 						Our <span>products</span>
 					</h2>
 				</div>
+				<div class = row>
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<div class="category-container">
+							<a class="category-item" href="#">All Product</a>
+							<a class="category-item" href="#">Shirts</a>
+							<a class="category-item" href="#">T-shirts</a>
+							<a class="category-item" href="#">Jacket</a>
+							<a class="category-item" href="#">Dress</a>
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-sm-6 col-md-4 col-lg-4" th:each="product : ${products}">
 						<div class="box">
@@ -50,22 +61,21 @@
 				<div class="btn-box">
 					<div class="pagination">
 						<ul class="pagination">
-							<li class="page-item" th:class="${currentPage.number == 0} ? 'disabled' : ''">
-								<a class="page-link" th:href="@{/site/product(page=0)}">First</a>
+							<li class="page-item">
+								<a class="page-link" th:href="@{/site/product(pageNumber=0)}" th:class="${currentPage.number == 0} ? 'page-item disabled' : 'page-item'">First</a>
 							</li>
-							<li class="page-item" th:class="${currentPage.number == 0} ? 'disabled' : ''">
-								<a class="page-link" th:href="@{/site/product(page=__${currentPage.number - 1}__)}">Previous</a>
+							<li class="page-item">
+								<a class="page-link" th:href="@{/site/product(pageNumber=${currentPage.number - 1})}" th:class="${currentPage.number == 0} ? 'page-item disabled' : 'page-item'">Previous</a>
 							</li>
 
 							<li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
-								<a class="page-link" th:href="@{/site/product(page=__${pageNum}__)}"
-								   th:class="${pageNum == currentPage.number} ? 'active' : ''" th:text="${pageNum + 1}"></a>
+								<a class="page-link" th:href="@{/site/product(pageNumber=${pageNum})}" th:class="${pageNum == currentPage.number} ? 'page-item active' : 'page-item'" th:text="${pageNum + 1}"></a>
 							</li>
-							<li class="page-item" th:class="${currentPage.number == totalPages - 1} ? 'disabled' : ''">
-								<a class="page-link" th:href="@{/site/product(page=__${currentPage.number + 1}__)}">Next</a>
+							<li class="page-item" >
+								<a class="page-link" th:href="@{/site/product(pageNumber=${currentPage.number + 1})}" th:class="${currentPage.number == totalPages - 1} ? 'page-item disabled' : 'page-item'">Next</a>
 							</li>
-							<li class="page-item" th:class="${currentPage.number == totalPages - 1} ? 'disabled' : ''">
-								<a class="page-link" th:href="@{/site/product(page=__${totalPages - 1}__)}">Last</a>
+							<li class="page-item" >
+								<a class="page-link" th:href="@{/site/product(pageNumber=${totalPages - 1})}" th:class="${currentPage.number == totalPages - 1} ? 'page-item disabled' : 'page-item'">Last</a>
 							</li>
 						</ul>
 					</div>

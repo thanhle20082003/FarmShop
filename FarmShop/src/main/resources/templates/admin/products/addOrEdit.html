@@ -64,14 +64,14 @@
                     }
                   }
                 </script>
-<!--                <input type="hidden" th:field="*{image}">-->
                 <div>
                   <img id="image" th:src="${product.image != null ? '/admin/products/images/' + product.image : '/admin/img/noimage.jpg' }" style="width: 100%; height: 250px;" class="img-fluid" alt="">
                 </div>
                 <div class="form-group">
                   <label>Image File: </label>
                   <input type=file onchange="chooseFile(this)" class="form-control-file" name="imageFile" id="productImage"
-                         placeholder="Image" aria-describedby="productImage"/>
+                         placeholder="Image" aria-describedby="productImage" th:field="*{imageFile}"/>
+                  <input type="hidden" th:field="*{image}">
                   <small th:if="${#fields.hasErrors('image')}">Image is required or
                     invalid</small>
                 </div>

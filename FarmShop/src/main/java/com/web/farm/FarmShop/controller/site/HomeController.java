@@ -45,9 +45,9 @@ public class HomeController {
 
 	@GetMapping("product")
 	public String product(ModelMap model,
-						  @RequestParam(defaultValue = "0") int pageNumber,
+						  @RequestParam(value = "pageNumber", defaultValue = "0") Optional<Integer> pageNumber,
 						  @RequestParam(defaultValue = "9") int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Pageable pageable = PageRequest.of(pageNumber.orElse(0), pageSize);
 
 		Page<Product> page = productService.findAll(pageable);
 
