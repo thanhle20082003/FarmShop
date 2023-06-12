@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("site/cart")
 public class CartController {
     @Autowired
     private ProductService productService;
@@ -17,10 +19,10 @@ public class CartController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") Long id) {
         GlobalData.cart.add(productService.getProductById(id).get());
-        return "redirect:/home";
+        return "redirect:/site/product";
     }
 
-    @GetMapping("/cart")
+    @RequestMapping("")
     public String getCartItems(Model model) {
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getUnitPrice).sum());

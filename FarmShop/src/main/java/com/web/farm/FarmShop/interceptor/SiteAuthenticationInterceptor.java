@@ -20,13 +20,14 @@ public class SiteAuthenticationInterceptor implements HandlerInterceptor {
 
         //kiểm tra username có tồn tại trong session không
         // -> có tồn tại
-        if (session.getAttribute("email") != null) {
+        if (session.getAttribute("customer") != null) {
             return true;
         }
 
 
         //thiết lập biến redirect-uri ở trong session
         session.setAttribute("redirect-uri", request.getRequestURI());
+        System.out.println("Ruri slogin: " + session.getAttribute("redirect-uri"));
 
         //yêu cầu login
         response.sendRedirect("/slogin");

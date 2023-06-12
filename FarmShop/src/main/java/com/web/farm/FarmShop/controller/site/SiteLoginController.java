@@ -103,7 +103,7 @@ public class SiteLoginController {
         //thiết lập thuộc tính username
         // -> người dùng đã đăng nhập vào hệ thống
 
-        session.setAttribute("name", customer.getName());
+        session.setAttribute("customer", customer);
 
 
         //
@@ -124,9 +124,9 @@ public class SiteLoginController {
     }
 
     @GetMapping("slogout")
-    public String logout(HttpSession session) {
-        // Xóa thuộc tính 'username' khỏi session
-        session.removeAttribute("name");
+    public String logout() {
+        // Xóa thuộc tính 'customer' khỏi session
+        session.removeAttribute("customer");
 
         // Chuyển hướng về trang đăng nhập
         return "redirect:/slogin";

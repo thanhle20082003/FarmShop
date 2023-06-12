@@ -39,4 +39,8 @@ public class Customer implements Serializable {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Cart cart;
+
 }

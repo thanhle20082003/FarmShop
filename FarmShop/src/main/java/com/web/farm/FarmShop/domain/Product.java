@@ -43,11 +43,13 @@ public class Product implements Serializable {
     @Column( nullable = false)
     private short status;
 
-
     @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
 }
