@@ -1,13 +1,11 @@
 package com.web.farm.FarmShop.service.impl;
 
+import com.web.farm.FarmShop.domain.Category;
 import com.web.farm.FarmShop.domain.Product;
 import com.web.farm.FarmShop.respository.ProductRepository;
 import com.web.farm.FarmShop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +31,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findAllByNameLike(String name, Pageable pageable) {
         return productRepository.findAllByNameLike(name, pageable);
+    }
+
+    @Override
+    public List<Product> findProductByStatus(Pageable pageable) {
+        short status = 3;
+        return productRepository.findProductByStatus(status , pageable);
+    }
+
+    @Override
+    public Page<Product> findProductByCategoryId(Long id, Pageable pageable) {
+        return productRepository.findProductByCategoryId(id, pageable);
     }
 
     @Override

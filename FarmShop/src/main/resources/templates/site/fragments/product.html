@@ -31,11 +31,8 @@
 				<div class = row>
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						<div class="category-container">
-							<a class="category-item" href="#">All Product</a>
-							<a class="category-item" href="#">Shirts</a>
-							<a class="category-item" href="#">T-shirts</a>
-							<a class="category-item" href="#">Jacket</a>
-							<a class="category-item" href="#">Dress</a>
+							<a class="category-item" th:href="@{/site/product}">All Product</a>
+							<a class="category-item" th:each="category : ${categories}" th:href="@{'/site/product/' + ${category.id}}" th:text="${category.name}">Shirts</a>
 						</div>
 					</div>
 				</div>

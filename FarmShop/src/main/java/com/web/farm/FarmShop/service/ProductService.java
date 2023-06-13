@@ -1,5 +1,6 @@
 package com.web.farm.FarmShop.service;
 
+import com.web.farm.FarmShop.domain.Category;
 import com.web.farm.FarmShop.domain.Product;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -71,6 +72,10 @@ public interface ProductService {
     Page<Product> findAll(Pageable pageable);
 
     List<Product> findAll();
+
+    List<Product> findProductByStatus(Pageable pageable);
+
+    Page<Product> findProductByCategoryId(Long id, Pageable pageable);
 
     <S extends Product> Optional<S> findOne(Example<S> example);
 
