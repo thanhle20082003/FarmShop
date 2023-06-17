@@ -18,12 +18,23 @@ public class CartItem implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cartId")
-    private Cart cart;
-
-    @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
+
     private int quantity;
+
+    private double totalPrice;
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

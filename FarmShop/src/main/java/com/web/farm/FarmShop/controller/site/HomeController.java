@@ -5,6 +5,7 @@ import com.web.farm.FarmShop.domain.Product;
 import com.web.farm.FarmShop.service.CategoryService;
 import com.web.farm.FarmShop.service.ProductService;
 import com.web.farm.FarmShop.service.StorageService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;

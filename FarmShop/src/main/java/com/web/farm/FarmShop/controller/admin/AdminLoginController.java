@@ -54,8 +54,7 @@ public class AdminLoginController {
 
         //thiết lập thuộc tính username
         // -> người dùng đã đăng nhập vào hệ thống
-
-        session.setAttribute("username", account);
+        session.setAttribute("username", account.getUsername());
 
         //
         Object ruri = session.getAttribute("redirect-uri");

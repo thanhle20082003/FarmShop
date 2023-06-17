@@ -105,6 +105,9 @@ public class SiteLoginController {
 
         session.setAttribute("customer", customer);
 
+        System.out.println("Customer login: " + session.getAttribute("customer"));
+
+
 
         //
         Object ruri = session.getAttribute("redirect-uri");

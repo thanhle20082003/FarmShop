@@ -2,6 +2,7 @@ package com.web.farm.FarmShop.service;
 
 import com.web.farm.FarmShop.domain.Category;
 import com.web.farm.FarmShop.domain.Product;
+import com.web.farm.FarmShop.model.ProductDTO;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

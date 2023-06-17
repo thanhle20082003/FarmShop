@@ -15,6 +15,8 @@ public interface CustomerService {
     //login
     Customer login(String email, String password);
 
+    Customer findByName(String name);
+
     <S extends Customer> S save(S entity);
 
     Optional<Customer> findByEmail(String email);

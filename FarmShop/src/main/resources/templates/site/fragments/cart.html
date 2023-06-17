@@ -22,76 +22,93 @@
   <!-- end breadcrumb section -->
 
   <!-- cart -->
-  <div class="cart-section mt-2 mb-2 ">
+  <div class="cart-box-main">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-12">
-          <div class="cart-table-wrap">
-            <table class="cart-table" th:each="item : ${cart}">
-              <thead class="cart-table-head">
-              <tr class="table-head-row">
-                <th class="product-remove"></th>
-                <th class="product-image">Product Image</th>
-                <th class="product-name">Name</th>
-                <th class="product-price">Price</th>
-                <th class="product-quantity">Quantity</th>
-                <th class="product-total">Total</th>
+        <div class="col-lg-12">
+          <div class="table-main table-responsive">
+            <p class="text-center"><i class="text-info font-weight-bold text-center"></i>
+              You don't have any items in your cart</p>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Images</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
-              <tr class="table-body-row">
-                <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                <td class="product-image"><img src="assets/img/products/product-img-1.jpg" alt="">
+              <tr th:each="cartItem :  ${cart}">
+                <td class="thumbnail-img">
+                  <a href="#">
+                    <img class="img-fluid"
+                         th:src="${'/site/images/' + cartItem.product.image}"/>
+                  </a>
                 </td>
-                <td class="product-name" th:text="${item.name}"></td>
-                <td class="product-price" th:text="${item.unitPrice}" ></td>
-                <td class="product-quantity"><input type="number" placeholder="0"></td>
-                <td class="product-total"></td>
+                <td class="name-pr">
+                  <p th:text="${cartItem.product.name}"></p>
+                </td>
+                <td class="price-pr">
+                  <p th:text="'$' + ${cartItem.product.unitPrice}"></p>
+                </td>
+                <form th:action="@{/update-cart}" method="post">
+                  <input type = "hidden" name = "id" th:value = "${cartItem.product.id}" >
+                  <td class="quantity-box">
+                    <input type="number" name="quantity" th:value="${cartItem.quantity}" size="4"
+                           value="1" min="0" step="1"
+                           class="c-input-text qty text">
+                  </td>
+                  <td class="total-pr">
+                    <p th:text="'$' + ${cartItem.totalPrice}"></p>
+                  </td>
+                  <td>
+                    <button type="submit" name="action" value="update" title="Update"
+                            class="btn btn-primary">
+                      Update
+                    </button>
+                    <button type="submit" name="action" value="delete" title="Update"
+                            class="btn btn-danger">
+                      Delete
+                    </button>
+                  </td>
+                </form>
               </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
 
-        <div class="col-lg-4">
-          <div class="total-section">
-            <table class="total-table">
-              <thead class="total-table-head">
-              <tr class="table-total-row">
-                <th>Total</th>
-                <th>Price</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="total-data">
-                <td><strong>Subtotal: </strong></td>
-                <td th:text="${total}"></td>
-              </tr>
-              <tr class="total-data">
-                <td><strong>Shipping: </strong></td>
-                <td>$45</td>
-              </tr>
-              <tr class="total-data">
-                <td><strong>Total: </strong></td>
-                <td th:text="${total}"></td>
-              </tr>
-              </tbody>
-            </table>
-            <div class="cart-buttons">
-              <a href="cart.html" class="boxed-btn">Update Cart</a>
-              <a href="checkout.html" class="boxed-btn black">Check Out</a>
+      <div class="row my-5">
+        <div class="col-lg-8 col-sm-12"></div>
+        <div class="col-lg-4 col-sm-12">
+          <div class="order-box">
+            <h3>Order summary</h3>
+            <div class="d-flex">
+              <h4>Sub Total</h4>
+              <div class="ml-auto font-weight-bold"> </div>
             </div>
-          </div>
-
-          <div class="coupon-section">
-            <h3>Apply Coupon</h3>
-            <div class="coupon-form-wrap">
-              <form action="index.html">
-                <p><input type="text" placeholder="Coupon"></p>
-                <p><input type="submit" value="Apply"></p>
-              </form>
+            <hr class="my-1">
+            <div class="d-flex">
+              <h4>Tax</h4>
+              <div class="ml-auto font-weight-bold"> $2</div>
             </div>
+            <div class="d-flex">
+              <h4>Shipping Cost</h4>
+              <div class="ml-auto font-weight-bold"> Free</div>
+            </div>
+            <hr>
+            <div class="d-flex gr-total">
+              <h5>Total Price</h5>
+              <div class="ml-auto h5" th:text="'$' + ${grandTotal}"></div>
+            </div>
+            <hr>
           </div>
+        </div>
+        <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>
         </div>
       </div>
     </div>

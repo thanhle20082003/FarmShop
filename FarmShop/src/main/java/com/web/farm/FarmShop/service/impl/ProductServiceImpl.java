@@ -2,6 +2,7 @@ package com.web.farm.FarmShop.service.impl;
 
 import com.web.farm.FarmShop.domain.Category;
 import com.web.farm.FarmShop.domain.Product;
+import com.web.farm.FarmShop.model.ProductDTO;
 import com.web.farm.FarmShop.respository.ProductRepository;
 import com.web.farm.FarmShop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
