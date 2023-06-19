@@ -26,8 +26,6 @@ public class AccountController {
     @GetMapping("add")
     public String add(Model model) {
         model.addAttribute("account", new AccountDTO());
-
-
         return "admin/accounts/addOrEdit";
     }
 

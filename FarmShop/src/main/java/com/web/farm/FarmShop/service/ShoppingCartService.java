@@ -9,4 +9,6 @@ public interface ShoppingCartService {
     List<CartItem> findAll(Customer customer);
 
     CartItem addToCart(Long productId, Integer quantity, Customer customer);
+
+    void removeProduct(Customer customer, Long productId);
 }

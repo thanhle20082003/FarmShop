@@ -130,6 +130,7 @@ public class SiteLoginController {
     public String logout() {
         // Xóa thuộc tính 'customer' khỏi session
         session.removeAttribute("customer");
+        session.removeAttribute("cartCount");
 
         // Chuyển hướng về trang đăng nhập
         return "redirect:/slogin";

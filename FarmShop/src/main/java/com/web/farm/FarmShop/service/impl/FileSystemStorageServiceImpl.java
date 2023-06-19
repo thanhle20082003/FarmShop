@@ -44,11 +44,11 @@ public class FileSystemStorageServiceImpl implements StorageService {
 
             Path destinationFile = this.rootLocation.resolve(Paths.get(storedFilename))
                     .normalize().toAbsolutePath();
-
+            //ktra xem co phai la thu muc root k
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 throw new StorageException("Can't not storage file outside current directory !") ;
             }
-
+            //sao chep file tu input -> destination
             try(InputStream inputStream = file.getInputStream()){
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
             }

@@ -8,112 +8,133 @@
 </head>
 <body>
 <section layout:fragment="content">
-  <section class="inner_page_head">
-    <div class="container_fuild">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="full">
-            <h3>Cart</h3>
-          </div>
+    <section class="inner_page_head">
+        <div class="container_fuild">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <h3>Cart</h3>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
-  <!-- end breadcrumb section -->
+    </section>
+    <!-- end breadcrumb section -->
 
-  <!-- cart -->
-  <div class="cart-box-main">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="table-main table-responsive">
-            <p class="text-center"><i class="text-info font-weight-bold text-center"></i>
-              You don't have any items in your cart</p>
-            <table class="table">
-              <thead>
-              <tr>
-                <th>Images</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="cartItem :  ${cart}">
-                <td class="thumbnail-img">
-                  <a href="#">
-                    <img class="img-fluid"
-                         th:src="${'/site/images/' + cartItem.product.image}"/>
-                  </a>
-                </td>
-                <td class="name-pr">
-                  <p th:text="${cartItem.product.name}"></p>
-                </td>
-                <td class="price-pr">
-                  <p th:text="'$' + ${cartItem.product.unitPrice}"></p>
-                </td>
-                <form th:action="@{/update-cart}" method="post">
-                  <input type = "hidden" name = "id" th:value = "${cartItem.product.id}" >
-                  <td class="quantity-box">
-                    <input type="number" name="quantity" th:value="${cartItem.quantity}" size="4"
-                           value="1" min="0" step="1"
-                           class="c-input-text qty text">
-                  </td>
-                  <td class="total-pr">
-                    <p th:text="'$' + ${cartItem.totalPrice}"></p>
-                  </td>
-                  <td>
-                    <button type="submit" name="action" value="update" title="Update"
-                            class="btn btn-primary">
-                      Update
-                    </button>
-                    <button type="submit" name="action" value="delete" title="Update"
-                            class="btn btn-danger">
-                      Delete
-                    </button>
-                  </td>
-                </form>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <!-- cart -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <p class="text-center" th:if="${check}"><i class="text-info font-weight-bold text-center"></i>
+                            You don't have any items in your cart</p>
+                        <table class="table" th:if="${grandTotal}">
+                            <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cartItem :  ${cart}">
+                                <td class="thumbnail-img">
+                                    <a href="#">
+                                        <img class="img-fluid"
+                                             th:src="${'/site/images/' + cartItem.product.image}" height="100px"
+                                             width="100px"/>
+                                    </a>
+                                </td>
+                                <td class="name-pr">
+                                    <p th:text="${cartItem.product.name}"></p>
+                                </td>
+                                <td class="price-pr">
+                                    <p th:text="'$' + ${cartItem.product.unitPrice}"></p>
+                                </td>
+                                <td class="quantity-box">
+                                    <p th:text="${cartItem.quantity}"></p>
+                                </td>
+                                <td class="total-pr">
+                                    <p th:text="'$' + ${cartItem.totalPrice}"></p>
+                                </td>
+                                <td>
+                                    <a th:data-id="${cartItem.product.id}" th:data-name="${cartItem.product.name}"
+                                       onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                                       class="btn btn-outline-danger ">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-      <div class="row my-5">
-        <div class="col-lg-8 col-sm-12"></div>
-        <div class="col-lg-4 col-sm-12">
-          <div class="order-box">
-            <h3>Order summary</h3>
-            <div class="d-flex">
-              <h4>Sub Total</h4>
-              <div class="ml-auto font-weight-bold"> </div>
+            <div class="row my-5" th:if="${grandTotal}">
+                <div class="col-lg-8 col-sm-12"></div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="order-box">
+                        <h3>Order summary</h3>
+                        <div class="d-flex">
+                            <h4>Sub Total</h4>
+                            <div class="ml-auto font-weight-bold"></div>
+                        </div>
+                        <hr class="my-1">
+                        <div class="d-flex">
+                            <h4>Tax</h4>
+                            <div class="ml-auto font-weight-bold"> Free</div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Shipping Cost</h4>
+                            <div class="ml-auto font-weight-bold"> Free</div>
+                        </div>
+                        <hr>
+                        <div class="d-flex gr-total">
+                            <h5>Grand Total</h5>
+                            <div class="ml-auto h5" th:text="'$' + ${grandTotal}"></div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>
+                </div>
             </div>
-            <hr class="my-1">
-            <div class="d-flex">
-              <h4>Tax</h4>
-              <div class="ml-auto font-weight-bold"> $2</div>
-            </div>
-            <div class="d-flex">
-              <h4>Shipping Cost</h4>
-              <div class="ml-auto font-weight-bold"> Free</div>
-            </div>
-            <hr>
-            <div class="d-flex gr-total">
-              <h5>Total Price</h5>
-              <div class="ml-auto h5" th:text="'$' + ${grandTotal}"></div>
-            </div>
-            <hr>
-          </div>
         </div>
-        <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>
-        </div>
-      </div>
     </div>
-  </div>
-  <!-- end cart -->
+
+    <script>
+        function showConfirmModalDialog(id, name) {
+            $('#productName').text(name);
+            $('#yesOption').attr('href', '/site/cart/delete/' + id);
+            $('#confirmationId').modal('show');
+        }
+    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to delete "<span id="productName"></span> " ?
+                </div>
+                <div class="modal-footer">
+                    <a id="yesOption" type="button" class="btn btn-warning">Yes</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end cart -->
 </section>
 </body>
 </html>

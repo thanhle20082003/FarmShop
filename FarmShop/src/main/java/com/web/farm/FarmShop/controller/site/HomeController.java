@@ -33,6 +33,9 @@ public class HomeController {
 	@Autowired
 	private CategoryService categoryService;
 
+	@Autowired
+	private HttpSession session;
+
 	@RequestMapping("")
 	public String index(ModelMap model,
 						@RequestParam(defaultValue = "0") int page,
@@ -41,6 +44,7 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, size);
 		List<Product> list = productService.findProductByStatus(pageable);
 		model.addAttribute("products", list);
+		session.getAttribute("cartCount");
 		return "site/fragments/home";
 	}
 

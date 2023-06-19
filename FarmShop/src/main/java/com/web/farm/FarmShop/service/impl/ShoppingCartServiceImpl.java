@@ -6,6 +6,7 @@ import com.web.farm.FarmShop.domain.Product;
 import com.web.farm.FarmShop.respository.CartItemRepository;
 import com.web.farm.FarmShop.respository.ProductRepository;
 import com.web.farm.FarmShop.service.ShoppingCartService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +28,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public CartItem addToCart(Long productId, Integer quantity, Customer customer) {
         Integer addedQuantity = quantity;
-        System.out.println("Add to cart service is running");
+
         Product product = productRepository.findById(productId).get();
-        System.out.println("Product after add to cart: " + product);
 
         CartItem  cartItem =  itemRepository.findByCustomerAndProduct(customer, product);
-        System.out.println("CartItem: " + cartItem);
 
         if(cartItem != null) {
             addedQuantity = cartItem.getQuantity() + quantity;
@@ -47,5 +46,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         return itemRepository.save(cartItem);
+    }
+    @Override
+    @Transactional
+    public void removeProduct(Customer customer, Long productId) {
+        itemRepository.deleteByCustomerAndProduct(customer.getId(), productId);
     }
 }

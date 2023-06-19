@@ -2,18 +2,13 @@ package com.web.farm.FarmShop.controller.site;
 
 import com.web.farm.FarmShop.domain.CartItem;
 import com.web.farm.FarmShop.domain.Customer;
-import com.web.farm.FarmShop.model.ProductDTO;
 import com.web.farm.FarmShop.service.ProductService;
 import com.web.farm.FarmShop.service.ShoppingCartService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,7 +31,17 @@ public class CartController {
 
         List<CartItem> cartItems = shoppingCartService.findAll(customer);
 
-        model.addAttribute("cart", cartItems);
+        if(cartItems == null) {
+            model.addAttribute("check");
+        } else {
+            double totalPrice = cartItems.stream()
+                    .mapToDouble(cartItem -> cartItem.getProduct().getUnitPrice() * cartItem.getQuantity())
+                    .sum();
+            model.addAttribute("grandTotal", totalPrice);
+            session.setAttribute("cartCount", cartItems.size());
+            model.addAttribute("cart", cartItems);
+        }
+
         return "/site/fragments/cart";
     }
 
@@ -47,19 +52,33 @@ public class CartController {
             HttpSession session,
             Model model){
 
-        System.out.println("Add to Cart is running");
         Customer customer = (Customer) session.getAttribute(("customer"));
-        System.out.println("Customer: " + customer);
 
         if(customer == null) {
             return "redirect:/slogin";
         }
 
         CartItem cartItem = shoppingCartService.addToCart(productId, quantity, customer);
-        System.out.println("Add to Cart is running");
 
         model.addAttribute("cart", cartItem);
-        return "redirect:/site/product";
+        return "redirect:/site/cart";
+    }
 
+    @GetMapping("delete/{id}")
+    public String addItemToCart(
+            @PathVariable("id") Long productId,
+            HttpSession session,
+            Model model){
+
+        Customer customer = (Customer) session.getAttribute(("customer"));
+
+        if(customer == null) {
+            return "redirect:/slogin";
+        }
+
+        shoppingCartService.removeProduct(customer, productId);
+
+        model.addAttribute("m", "Delete was successed");
+        return "forward:/site/cart";
     }
 }
