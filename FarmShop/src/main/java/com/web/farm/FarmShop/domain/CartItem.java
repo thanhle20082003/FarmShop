@@ -25,9 +25,9 @@ public class CartItem implements Serializable {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    private int quantity;
+    private Integer quantity;
 
-    private double totalPrice;
+    private Double totalPrice;
 
     @Override
     public String toString() {

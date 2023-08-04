@@ -19,7 +19,7 @@ public class OrderDetail implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private Integer quatity;
+    private Integer quantity;
 
     @Column(nullable = false)
     private Double unitPrice;

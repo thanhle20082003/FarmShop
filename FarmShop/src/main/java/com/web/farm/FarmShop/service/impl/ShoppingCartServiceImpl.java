@@ -52,4 +52,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void removeProduct(Customer customer, Long productId) {
         itemRepository.deleteByCustomerAndProduct(customer.getId(), productId);
     }
+
+    @Override
+    public double calculateTotalPrice(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .mapToDouble(cartItem -> cartItem.getProduct().getUnitPrice() * cartItem.getQuantity())
+                .sum();
+    }
+    @Override
+    @Transactional
+    public void clearCart(Customer customer) {
+        List<CartItem> cartItems = itemRepository.findByCustomer(customer);
+        itemRepository.deleteAll(cartItems);
+    }
 }

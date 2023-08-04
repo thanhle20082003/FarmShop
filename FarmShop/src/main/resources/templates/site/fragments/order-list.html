@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="full">
-                        <h3>Cart</h3>
+                        <h3>Order List</h3>
                     </div>
                 </div>
             </div>
@@ -27,44 +27,36 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
-                        <p class="text-center" th:if="${check}"><i class="text-info font-weight-bold text-center"></i>
-                            You don't have any items in your cart</p>
-                        <table class="table" th:if="${grandTotal}">
+                        <table class="table">
                             <thead>
                             <tr>
-                                <th>Images</th>
-                                <th>Product Name</th>
+                                <th>Date</th>
+                                <th>Address</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
+                                <th>Phone</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="cartItem :  ${cart}">
-                                <td class="thumbnail-img">
-                                    <a href="#">
-                                        <img class="img-fluid"
-                                             th:src="${'/site/images/' + cartItem.product.image}" height="100px"
-                                             width="100px"/>
-                                    </a>
-                                </td>
+                            <tr th:each="item :  ${order}">
                                 <td class="name-pr">
-                                    <p th:text="${cartItem.product.name}"></p>
+                                    <p th:text="${item.orderDate}"></p>
                                 </td>
                                 <td class="price-pr">
-                                    <p th:text="'$' + ${cartItem.product.unitPrice}"></p>
+                                    <p th:text="${item.address}"></p>
                                 </td>
                                 <td class="quantity-box">
-                                    <p th:text="${cartItem.quantity}"></p>
+                                    <p th:text="'$' + ${item.amount}"></p>
                                 </td>
                                 <td class="total-pr">
-                                    <p th:text="'$' + ${cartItem.totalPrice}"></p>
+                                    <p th:text="${item.phone}"></p>
                                 </td>
-                                <td>
-                                    <a th:data-id="${cartItem.product.id}" th:data-name="${cartItem.product.name}"
-                                       onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
-                                       class="btn btn-outline-danger ">Delete</a>
+                                <td class="total-pr">
+                                    <p th:text="${item.status}"></p>
+                                </td>
+                                <td class="total-pr">
+                                    <a th:href="@{/site/orderdetail}">Detail</a>
                                 </td>
                             </tr>
                             </tbody>

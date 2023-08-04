@@ -16,8 +16,6 @@ import java.util.List;
 @Controller
 @RequestMapping("site/cart")
 public class CartController {
-    @Autowired
-    private ProductService productService;
 
     @Autowired
     private ShoppingCartService shoppingCartService;
@@ -25,18 +23,14 @@ public class CartController {
     @RequestMapping("")
     public String cart(Model model, HttpSession session){
 
-        System.out.println(" Cart is running");
         Customer customer = (Customer) session.getAttribute("customer");
-        System.out.println("Customer: " + customer.getName());
 
         List<CartItem> cartItems = shoppingCartService.findAll(customer);
 
         if(cartItems == null) {
             model.addAttribute("check");
         } else {
-            double totalPrice = cartItems.stream()
-                    .mapToDouble(cartItem -> cartItem.getProduct().getUnitPrice() * cartItem.getQuantity())
-                    .sum();
+            double totalPrice = shoppingCartService.calculateTotalPrice(cartItems);
             model.addAttribute("grandTotal", totalPrice);
             session.setAttribute("cartCount", cartItems.size());
             model.addAttribute("cart", cartItems);

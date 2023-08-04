@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{site/index.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Order</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <section class="why_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-8 offset-lg-2">
+                  <div class="full">
+                     <form th:object="${order}" method="post" th:action="@{/site/order/purchase}">
+                        <fieldset>
+                           <div class="form-group">
+                              <input th:field="*{id}" class="form-control" type="hidden" readonly>
+                              <label>Address: </label>
+                              <input th:field="*{address}" class="form-control" type="text"
+                                     placeholder="Name" >
+                              <small th:if="${#fields.hasErrors('address')}">Address is required or invalid</small>
+                           </div>
+                           <div class="form-group">
+                              <label>Phone Number: </label>
+                              <input th:field="*{phone}" class="form-control" type="text"
+                                     placeholder="Name" >
+                              <small th:if="${#fields.hasErrors('phone')}">Phone number is required or invalid</small>
+                           </div>
+                           <button type="submit" class="btn-box">Purchase</button>
+                        </fieldset>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+	</section>
+</body>
+</html>
