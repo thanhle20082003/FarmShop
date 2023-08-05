@@ -81,6 +81,7 @@ public class OrderController {
             orderDetail.setProduct(cartItem.getProduct());
             orderDetail.setQuantity(cartItem.getQuantity());
             orderDetail.setUnitPrice(cartItem.getProduct().getUnitPrice());
+            orderDetail.setOrder(order);
             orderService.addOrderDetail(orderDetail);
         }
 
