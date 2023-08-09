@@ -1,6 +1,6 @@
 package com.web.farm.FarmShop.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +22,8 @@ public class CartItem implements Serializable {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+    @JoinColumn(name = "accountId")
+    private Account account;
 
     private Integer quantity;
 

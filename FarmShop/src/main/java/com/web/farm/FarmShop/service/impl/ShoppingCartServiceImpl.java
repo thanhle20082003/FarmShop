@@ -1,37 +1,61 @@
 package com.web.farm.FarmShop.service.impl;
 
+
+
+import com.web.farm.FarmShop.domain.Account;
 import com.web.farm.FarmShop.domain.CartItem;
-import com.web.farm.FarmShop.domain.Customer;
 import com.web.farm.FarmShop.domain.Product;
 import com.web.farm.FarmShop.respository.CartItemRepository;
 import com.web.farm.FarmShop.respository.ProductRepository;
+import com.web.farm.FarmShop.service.AccountService;
 import com.web.farm.FarmShop.service.ShoppingCartService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
-    CartItemRepository itemRepository;
+    private CartItemRepository itemRepository;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private AccountService accountService;
 
     @Override
-    public List<CartItem> findAll(Customer customer) {
-        return itemRepository.findByCustomer(customer);
+    public List<CartItem> findAll(UserDetails userDetails) {
+        // Lấy tên người dùng từ UserDetails
+        String username = userDetails.getUsername();
+
+        // Sử dụng tên người dùng để lấy thông tin Account
+        Optional<Account> account = accountService.findById(username);
+
+        // Sử dụng thông tin Account để truy vấn danh sách CartItem
+        return itemRepository.findByAccount(account.get());
     }
 
+
     @Override
-    public CartItem addToCart(Long productId, Integer quantity, Customer customer) {
+    public CartItem addToCart(Long productId, Integer quantity, UserDetails userDetails) {
+        // Lấy tên người dùng từ UserDetails
+        String username = userDetails.getUsername();
+
+        // Sử dụng tên người dùng để lấy thông tin Account
+        Optional<Account> account = accountService.findById(username);
+        System.out.println("Account" +  account);
+
+
         Integer addedQuantity = quantity;
 
         Product product = productRepository.findById(productId).get();
 
-        CartItem  cartItem =  itemRepository.findByCustomerAndProduct(customer, product);
+        CartItem  cartItem =  itemRepository.findByAccountAndProduct(account.get(), product);
 
         if(cartItem != null) {
             addedQuantity = cartItem.getQuantity() + quantity;
@@ -40,7 +64,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         } else {
             cartItem = new CartItem();
             cartItem.setQuantity(quantity);
-            cartItem.setCustomer(customer);
+            cartItem.setAccount(account.get());
             cartItem.setProduct(product);
             cartItem.setTotalPrice(product.getUnitPrice() * quantity);
         }
@@ -49,10 +73,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
     @Override
     @Transactional
-    public void removeProduct(Customer customer, Long productId) {
-        itemRepository.deleteByCustomerAndProduct(customer.getId(), productId);
+    public void removeProduct(UserDetails userDetails, Long productId) {
+        String username = userDetails.getUsername();
+        itemRepository.deleteByAccountAndProduct(username, productId);
     }
-
     @Override
     public double calculateTotalPrice(List<CartItem> cartItems) {
         return cartItems.stream()
@@ -61,8 +85,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
     @Override
     @Transactional
-    public void clearCart(Customer customer) {
-        List<CartItem> cartItems = itemRepository.findByCustomer(customer);
+    public void clearCart(UserDetails userDetails) {
+
+        String username = userDetails.getUsername();
+
+        // Sử dụng tên người dùng để lấy thông tin Account
+        Optional<Account> account = accountService.findById(username);
+
+        List<CartItem> cartItems = itemRepository.findByAccount(account.get());
         itemRepository.deleteAll(cartItems);
     }
 }

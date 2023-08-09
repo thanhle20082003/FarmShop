@@ -24,16 +24,16 @@
 				<div class="row">
 					<div class="col-lg-8 offset-lg-2">
 						<div class="full">
-							<form th:action="@{/slogin}" method="post" th:object="${customer}">
+							<form th:action="@{/login}" method="post" th:object="${account}">
 								<fieldset>
 									<div class="form-group">
-										<input type="email" placeholder="Enter your email address"
-											   th:field="*{email}" class="form-control" />
-										<small th:if="${#fields.hasErrors('email')}" id="username"
-											   class="form-text text-muted">Email is invalid</small>
+										<input type="text" placeholder="Enter your username address"
+											   th:field="*{username}" class="form-control" style="text-transform: none" />
+										<small th:if="${#fields.hasErrors('username')}" id="username"
+											   class="form-text text-muted">Username is invalid</small>
 									</div>
 									<div class="form-group">
-										<input type="password" placeholder="Password" th:field="*{password}" class="form-control">
+										<input type="password" placeholder="Password" th:field="*{password}" class="form-control" style="text-transform: none">
 										<small th:if="${#fields.hasErrors('password')}" id="password"
 											   class="form-text text-muted">Password is invalid</small>
 									</div>
@@ -41,6 +41,9 @@
 									<div class="form-group">
 										<input type="checkbox" class="custom-control-input" th:field="*{rememberMe}" />
 										<label class="custom-control-label">Remember Me</label>
+									</div>
+									<div th:if="${message != null}" class="alert alert-primary" role="alert">
+										<i>[[${message}]]</i>
 									</div>
 									<button type="submit" class="btn-box">Submit</button>
 								</fieldset>

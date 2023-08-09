@@ -1,5 +1,4 @@
 package com.web.farm.FarmShop.service.impl;
-
 import com.web.farm.FarmShop.domain.Account;
 import com.web.farm.FarmShop.respository.AccountRepository;
 import com.web.farm.FarmShop.service.AccountService;
@@ -19,57 +18,53 @@ import java.util.function.Function;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private AccountRepository accountRepository;
 
 
     //login
     @Override
     public Account login(String username, String password) {
-
-        //tìm kiếm thông tin username
+        // Tìm kiếm thông tin username
         Optional<Account> optExist = findById(username);
 
-
-        //nếu tìm thấy username và so sánh password nếu trùng nhau
-        if (optExist.isPresent() && bCryptPasswordEncoder.matches(password, optExist.get().getPassword())) {
-
-            //xóa trắng password
-            optExist.get().setPassword("");
-
-            return optExist.get();
-        }
-
-        //login thất bại
-        return null;
-    }
-
-    @Override
-    public <S extends Account> S save(S entity) {
-
-        Optional<Account> optExist = findById(entity.getUsername());
-
-        //kiểm tra nếu người dùng kh nhập password
+        // Nếu tìm thấy username và so sánh password nếu trùng nhau
         if (optExist.isPresent()) {
-
-            //Lấy password cũ
-            if (StringUtils.isEmpty(entity.getPassword())) {
-                entity.setPassword(optExist.get().getPassword());
-
-            }else {// nhập password
-
-//				-> mã hóa password
-                entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+            // Không cần mã hóa mật khẩu trong phương thức login
+            if (password.equals(optExist.get().getPassword())) {
+                // Xóa trắng password
+                optExist.get().setPassword("");
+                return optExist.get();
             }
         }
 
-        entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+        // Login thất bại
+        return null;
+    }
+
+
+
+    @Override
+    public <S extends Account> S save(S entity) {
+        Optional<Account> optExist = findById(entity.getUsername());
+
+        // Kiểm tra nếu người dùng đã nhập mật khẩu mới
+        if (!StringUtils.isEmpty(entity.getPassword())) {
+            // Mã hóa mật khẩu mới
+            entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+        } else {
+            // Sử dụng mật khẩu cũ từ tài khoản hiện tại
+            if (optExist.isPresent()) {
+                entity.setPassword(optExist.get().getPassword());
+            }
+        }
 
         return accountRepository.save(entity);
     }
+
 
     @Override
     public <S extends Account> Optional<S> findOne(Example<S> example) {
@@ -97,9 +92,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> findById(String id) {
-        return accountRepository.findById(id);
+    public Optional<Account> findById(String username) {
+        return accountRepository.findById(username);
     }
+
 
     @Override
     public <S extends Account> List<S> saveAll(Iterable<S> entities) {

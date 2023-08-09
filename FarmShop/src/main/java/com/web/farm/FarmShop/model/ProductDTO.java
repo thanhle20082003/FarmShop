@@ -1,6 +1,5 @@
 package com.web.farm.FarmShop.model;
 
-import com.web.farm.FarmShop.domain.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

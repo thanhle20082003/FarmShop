@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public interface AccountService {
+
     //login
     Account login(String username, String password);
 
@@ -27,7 +28,7 @@ public interface AccountService {
 
     List<Account> findAllById(Iterable<String> ids);
 
-    Optional<Account> findById(String id);
+    Optional<Account> findById(String username);
 
     <S extends Account> List<S> saveAll(Iterable<S> entities);
 

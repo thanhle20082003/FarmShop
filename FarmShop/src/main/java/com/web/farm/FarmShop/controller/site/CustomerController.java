@@ -1,10 +1,10 @@
 package com.web.farm.FarmShop.controller.site;
 
-import com.web.farm.FarmShop.domain.Customer;
-import com.web.farm.FarmShop.model.CustomerDTO;
-import com.web.farm.FarmShop.service.CustomerService;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
+import com.web.farm.FarmShop.domain.Account;
+import com.web.farm.FarmShop.model.AccountDTO;
+import com.web.farm.FarmShop.service.AccountService;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,20 +13,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("site/customers")
 public class CustomerController {
 
     @Autowired
-    private CustomerService customerService;
+    private AccountService accountService;
 
     @Autowired
     HttpSession session;
     @GetMapping("information")
     public String list(ModelMap model) {
-        Customer customer = (Customer) session.getAttribute("customer");
+        Account customer = (Account) session.getAttribute("customer");
 
         model.addAttribute("customer", customer);
 
@@ -34,16 +32,16 @@ public class CustomerController {
     }
 
     @PostMapping("information")
-    public ModelAndView ModelAndView(ModelMap model, @Valid @ModelAttribute("customer")CustomerDTO dto, BindingResult result) {
+    public ModelAndView ModelAndView(ModelMap model, @Valid @ModelAttribute("customer") AccountDTO dto, BindingResult result) {
         if(result.hasErrors()) {
             return new ModelAndView("site/customers/information", model);
         }
 
-        Customer entity = new Customer();
+        Account entity = new Account();
 
         BeanUtils.copyProperties(dto, entity);
 
-        customerService.save(entity);
+        accountService.save(entity);
 
         model.addAttribute("message", "Update successfully");
 

@@ -1,14 +1,14 @@
-package com.web.farm.FarmShop.controller.site;
+package com.web.farm.FarmShop.controller;
 
-import com.web.farm.FarmShop.domain.Customer;
-import com.web.farm.FarmShop.model.CustomerDTO;
-import com.web.farm.FarmShop.model.SiteLoginDTO;
-import com.web.farm.FarmShop.service.CustomerService;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
+import com.web.farm.FarmShop.domain.Account;
+import com.web.farm.FarmShop.model.AccountDTO;
+import com.web.farm.FarmShop.service.AccountService;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,32 +19,32 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 
 @Controller
-public class SiteLoginController {
+public class LoginController {
     @Autowired
-    private CustomerService customerService;
+    private AccountService accountService;
 
     @Autowired
     private HttpSession session;
 
-    //site login
-    @GetMapping("slogin")
+    //login
+    @GetMapping("login")
     public String login (ModelMap model) {
-        model.addAttribute("customer", new SiteLoginDTO());
+        model.addAttribute("account", new AccountDTO());
 
-        return "/site/customers/login";
+        return "site/customers/login";
     }
 
     @GetMapping("register")
     public String register (ModelMap model) {
-        model.addAttribute("customer", new CustomerDTO());
+        model.addAttribute("account", new AccountDTO());
 
-        return "/site/customers/register";
+        return "site/customers/register";
     }
 
     @PostMapping("register")
     public ModelAndView saveOrUpdate(ModelMap model,
-                                     @Valid @ModelAttribute("customer")
-                                     CustomerDTO dto, BindingResult result){
+                                     @Valid @ModelAttribute("account")
+                                     AccountDTO dto, BindingResult result){
 
 
 //		nếu có lỗi -> nạp lại trang registration
@@ -53,8 +53,7 @@ public class SiteLoginController {
         }
 
         //Tạo ra đối tượng entity
-        Customer entity = new Customer();
-
+        Account entity = new Account();
 
         dto.setRegisteredDate(new Date());
         dto.setIsActive(true);
@@ -63,22 +62,19 @@ public class SiteLoginController {
         BeanUtils.copyProperties(dto, entity);
 
         //Lưu thông tin entity vào CSDL
-        customerService.save(entity);
+        accountService.save(entity);
 
 
         //Hiển thị thông báo
         model.addAttribute("message", "Sign up successfully !");
 
-        return new ModelAndView("redirect:/slogin" ,model);
+        return new ModelAndView("redirect:/login" ,model);
     }
 
-
-    @PostMapping("slogin")
+    @PostMapping("login")
     public ModelAndView login (ModelMap model,
-                               @Valid @ModelAttribute("customer")
-                               SiteLoginDTO dto, BindingResult result) {
-
-        System.out.println("Login is running");
+                               @Valid @ModelAttribute("account")
+                               AccountDTO dto, BindingResult result) {
         //nếu có lỗi
 //		->trả về view login
         if (result.hasErrors()) {
@@ -86,14 +82,14 @@ public class SiteLoginController {
         }
 
         //gọi phương thức login -> để về đối tượng account
-        Customer customer = customerService.login(dto.getEmail(), dto.getPassword());
-
+        Account account = accountService.login(dto.getUsername(), dto.getPassword());
+        System.out.println(dto.getPassword());
 
         //nếu kh tìm thấy account
-        if (customer == null) {
+        if (account == null) {
 
             //hiển thị thông báo
-            model.addAttribute("message", "Invalid email or password");
+            model.addAttribute("message", "Invalid username or password");
 
             //trả về view login
             return new ModelAndView("/site/customers/login", model);
@@ -103,9 +99,9 @@ public class SiteLoginController {
         //thiết lập thuộc tính username
         // -> người dùng đã đăng nhập vào hệ thống
 
-        session.setAttribute("customer", customer);
+        session.setAttribute("username", account);
 
-        System.out.println("Customer login: " + session.getAttribute("customer"));
+        System.out.println("Account login: " + session.getAttribute("username"));
 
 
 
@@ -126,13 +122,9 @@ public class SiteLoginController {
 
     }
 
-    @GetMapping("slogout")
-    public String logout() {
-        // Xóa thuộc tính 'customer' khỏi session
-        session.removeAttribute("customer");
-        session.removeAttribute("cartCount");
+    @GetMapping("/login/error")
+    public String error(Model model){
 
-        // Chuyển hướng về trang đăng nhập
-        return "redirect:/slogin";
+        return "forward:/login";
     }
 }

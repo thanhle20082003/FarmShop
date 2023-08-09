@@ -36,29 +36,43 @@
 <!--                                <div class="text-center">-->
 <!--                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>-->
 <!--                                </div>-->
-<!--                                <form class="user" th:action="@{/login}" th:object="${account}" method="post">-->
+<!--                                <form class="user" th:action="@{/register}" th:object="${account}" method="post">-->
 <!--                                    <div class="form-group">-->
 <!--                                        <input type="text" class="form-control form-control-user" th:field="*{username}"-->
 <!--                                               aria-describedby="username"-->
-<!--                                               placeholder="Username"/>-->
+<!--                                               placeholder="Enter your username"/>-->
 <!--                                        <small th:if="${#fields.hasErrors('username')}" id="username"-->
 <!--                                               class="form-text text-muted">Username is invalid</small>-->
 <!--                                    </div>-->
 <!--                                    <div class="form-group">-->
 <!--                                        <input type="password" class="form-control form-control-user"-->
-<!--                                               id="exampleInputPassword" placeholder="Password" th:field="*{password}"/>-->
+<!--                                               id="exampleInputPassword" placeholder="Enter your password" th:field="*{password}"/>-->
 <!--                                        <small th:if="${#fields.hasErrors('password')}" id="password"-->
 <!--                                               class="form-text text-muted">Password is invalid</small>-->
 <!--                                    </div>-->
-<!--                                    <div class="custom-control custom-checkbox small">-->
-<!--                                        <input type="checkbox" class="custom-control-input" th:field="*{rememberMe}"/>-->
-<!--                                        <label class="custom-control-label">Remember Me</label>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <input type="password" class="form-control form-control-user"-->
+<!--                                               id="exampleInputName" placeholder="Enter your name" th:field="*{name}"/>-->
+<!--                                        <small th:if="${#fields.hasErrors('name')}" id="name"-->
+<!--                                               class="form-text text-muted">Name is invalid</small>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <input type="password" class="form-control form-control-user"-->
+<!--                                               id="exampleInputEmail" placeholder="Enter your email" th:field="*{email}"/>-->
+<!--                                        <small th:if="${#fields.hasErrors('email')}" id="email"-->
+<!--                                               class="form-text text-muted">Email is invalid</small>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <input type="password" class="form-control form-control-user"-->
+<!--                                               id="exampleInputPhone" placeholder="Enter your phone" th:field="*{phone}"/>-->
+<!--                                        <small th:if="${#fields.hasErrors('phone')}" id="phone"-->
+<!--                                               class="form-text text-muted">Phone number is invalid</small>-->
 <!--                                    </div>-->
 <!--                                    <div th:if="${message != null}" class="alert alert-primary" role="alert">-->
 <!--                                        <i>[[${message}]]</i>-->
 <!--                                    </div>-->
 <!--                                    <button class="btn btn-primary btn-user btn-block">-->
-<!--                                        Login-->
+<!--                                        Register-->
 <!--                                    </button>-->
 <!--                                </form>-->
 <!--                            </div>-->

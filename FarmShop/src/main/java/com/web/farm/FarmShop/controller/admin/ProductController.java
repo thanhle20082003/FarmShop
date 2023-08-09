@@ -11,7 +11,7 @@ import com.web.farm.FarmShop.model.ProductDTO;
 import com.web.farm.FarmShop.service.CategoryService;
 import com.web.farm.FarmShop.service.ProductService;
 import com.web.farm.FarmShop.service.StorageService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

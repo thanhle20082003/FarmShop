@@ -1,11 +1,13 @@
 package com.web.farm.FarmShop.controller.site;
 
 import com.web.farm.FarmShop.domain.CartItem;
-import com.web.farm.FarmShop.domain.Customer;
-import com.web.farm.FarmShop.service.ProductService;
 import com.web.farm.FarmShop.service.ShoppingCartService;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,18 @@ public class CartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    private HttpServletRequest request;
+
     @RequestMapping("")
-    public String cart(Model model, HttpSession session){
+    public String cart(Model model, Authentication authentication){
 
-        Customer customer = (Customer) session.getAttribute("customer");
+        HttpSession session = request.getSession();
 
-        List<CartItem> cartItems = shoppingCartService.findAll(customer);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println("userDetails" +  userDetails);
+
+        List<CartItem> cartItems = shoppingCartService.findAll(userDetails);
 
         if(cartItems == null) {
             model.addAttribute("check");
@@ -43,16 +51,12 @@ public class CartController {
     public String addItemToCart(
             @PathVariable("id") Long productId,
             @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
-            HttpSession session,
-            Model model){
+            Model model, Authentication authentication){
 
-        Customer customer = (Customer) session.getAttribute(("customer"));
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println("userDetails" +  userDetails);
 
-        if(customer == null) {
-            return "redirect:/slogin";
-        }
-
-        CartItem cartItem = shoppingCartService.addToCart(productId, quantity, customer);
+        CartItem cartItem = shoppingCartService.addToCart(productId, quantity, userDetails);
 
         model.addAttribute("cart", cartItem);
         return "redirect:/site/cart";
@@ -62,15 +66,13 @@ public class CartController {
     public String addItemToCart(
             @PathVariable("id") Long productId,
             HttpSession session,
-            Model model){
+            Model model,
+            Authentication authentication){
 
-        Customer customer = (Customer) session.getAttribute(("customer"));
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        if(customer == null) {
-            return "redirect:/slogin";
-        }
 
-        shoppingCartService.removeProduct(customer, productId);
+        shoppingCartService.removeProduct(userDetails, productId);
 
         model.addAttribute("m", "Delete was successed");
         return "forward:/site/cart";
