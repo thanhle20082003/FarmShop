@@ -18,4 +18,12 @@ public class Role  implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     List<Authority> authorities;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

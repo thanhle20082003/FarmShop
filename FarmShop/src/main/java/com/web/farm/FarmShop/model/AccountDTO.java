@@ -2,7 +2,6 @@ package com.web.farm.FarmShop.model;
 
 import javax.validation.constraints.NotEmpty;
 
-import com.web.farm.FarmShop.domain.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

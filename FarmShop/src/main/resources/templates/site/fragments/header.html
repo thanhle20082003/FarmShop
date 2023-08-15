@@ -31,9 +31,12 @@
                      <li class="nav-item">
                         <a class="nav-link"  th:href="@{/site/contact}">Contact</a>
                      </li>
+                     <li class="nav-item" th:if="${#request.isUserInRole('ADM')}">
+                        <a class="nav-link"  th:href="@{/admin/categories}">Admin</a>
+                     </li>
                      <li class="nav-item dropdown" th:if="${#request.getRemoteUser() != null}">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="true"> <span class="nav-label" th:text="${#request.session.id}" ></span> <span
+                           aria-haspopup="true" aria-expanded="true"> <span class="nav-label" th:text="${session.username.name}" ></span> <span
                                  class="caret"></span> </a>
                         <ul class="dropdown-menu">
                            <li><a th:href="@{/site/customers/information}">Pro file</a></li>

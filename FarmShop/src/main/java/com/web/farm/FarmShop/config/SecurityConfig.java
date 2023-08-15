@@ -49,13 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/site/cart/**").authenticated()
-                .antMatchers("site//order/**").authenticated()
+                .antMatchers("/site/order/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("ADM")
                 .anyRequest().permitAll();
 
         http.formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/login/view")
                 .defaultSuccessUrl("/login/success",false)
                 .failureUrl("/login/error");
 

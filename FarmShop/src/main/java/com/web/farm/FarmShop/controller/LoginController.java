@@ -2,7 +2,10 @@ package com.web.farm.FarmShop.controller;
 
 import com.web.farm.FarmShop.domain.Account;
 import com.web.farm.FarmShop.model.AccountDTO;
+import com.web.farm.FarmShop.model.LoginDTO;
 import com.web.farm.FarmShop.service.AccountService;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -29,7 +32,9 @@ public class LoginController {
     //login
     @GetMapping("login")
     public String login (ModelMap model) {
-        model.addAttribute("account", new AccountDTO());
+
+        model.addAttribute("account", new LoginDTO());
+
 
         return "site/customers/login";
     }
@@ -71,19 +76,20 @@ public class LoginController {
         return new ModelAndView("redirect:/login" ,model);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login/view")
     public ModelAndView login (ModelMap model,
                                @Valid @ModelAttribute("account")
-                               AccountDTO dto, BindingResult result) {
+                               LoginDTO dto, BindingResult result, HttpServletRequest request) {
         //nếu có lỗi
 //		->trả về view login
         if (result.hasErrors()) {
             return new ModelAndView("/site/customers/login", model);
         }
 
+
         //gọi phương thức login -> để về đối tượng account
         Account account = accountService.login(dto.getUsername(), dto.getPassword());
-        System.out.println(dto.getPassword());
+        System.out.println(account.getAuthorities());
 
         //nếu kh tìm thấy account
         if (account == null) {
@@ -99,15 +105,8 @@ public class LoginController {
         //thiết lập thuộc tính username
         // -> người dùng đã đăng nhập vào hệ thống
 
-        session.setAttribute("username", account);
-
-        System.out.println("Account login: " + session.getAttribute("username"));
-
-
-
         //
         Object ruri = session.getAttribute("redirect-uri");
-        System.out.println("ruri loginsite: " + ruri);
 
         //kiểm tra nếu tồn tại redirect uri
         if (ruri != null) {
@@ -117,6 +116,7 @@ public class LoginController {
             return new ModelAndView("redirect:" + ruri);
         }
 
+        session.setAttribute("username", account);
         //forward đến
         return new ModelAndView("forward:/site", model);
 
