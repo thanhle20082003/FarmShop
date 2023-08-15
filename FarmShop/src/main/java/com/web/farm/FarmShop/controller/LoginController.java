@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -76,10 +77,11 @@ public class LoginController {
         return new ModelAndView("redirect:/login" ,model);
     }
 
-    @PostMapping("/login/view")
+    @PostMapping("/login/haha")
     public ModelAndView login (ModelMap model,
                                @Valid @ModelAttribute("account")
-                               LoginDTO dto, BindingResult result, HttpServletRequest request) {
+                               LoginDTO dto, BindingResult result) {
+        System.out.println("Login");
         //nếu có lỗi
 //		->trả về view login
         if (result.hasErrors()) {
@@ -120,11 +122,5 @@ public class LoginController {
         //forward đến
         return new ModelAndView("forward:/site", model);
 
-    }
-
-    @GetMapping("/login/error")
-    public String error(Model model){
-
-        return "forward:/login";
     }
 }

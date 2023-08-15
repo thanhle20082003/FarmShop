@@ -37,15 +37,10 @@
 										<small th:if="${#fields.hasErrors('password')}" id="password"
 											   class="form-text text-muted">Password is invalid</small>
 									</div>
-
-									<div class="form-group">
-										<input type="checkbox" class="custom-control-input" th:field="*{rememberMe}" />
-										<label class="custom-control-label">Remember Me</label>
-									</div>
 									<div th:if="${message != null}" class="alert alert-primary" role="alert">
 										<i>[[${message}]]</i>
 									</div>
-									<button type="submit" class="btn-box">Submit</button>
+									<button type="submit" class="btn-box">Login</button>
 								</fieldset>
 							</form>
 						</div>

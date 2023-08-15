@@ -15,6 +15,4 @@ public class LoginDTO {
 
     @NotNull
     private String password;
-
-    private Boolean rememberMe;
 }
